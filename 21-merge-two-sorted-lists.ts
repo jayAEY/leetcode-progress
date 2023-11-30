@@ -1,9 +1,64 @@
+// class Node {
+//   constructor(value, next) {
+//     this.value = value;
+//     this.next = next ? next : null;
+//   }
+// }
+
+// const initializeLinkedListFromArray = (array) => {
+//   if (array.length === 0) {
+//     return [];
+//   }
+//   let head = new Node(array[0]);
+//   let current = head;
+//   for (let i = 0; i < array.length; i++) {
+//     let newNode = new Node(array[i]);
+//     current.next = newNode;
+//     current = current.next;
+//   }
+//   return head;
+// };
+
+// const printLinkedList = (head) => {
+//   let current = head;
+//   let printStr = "";
+//   while (current) {
+//     printStr += current.value + "->";
+//     current = current.next;
+//   }
+//   console.log(printStr);
+// };
+
+// const head = initializeLinkedListFromArray([1, 2, 3]);
+// printLinkedList(head);
+
 // function mergeTwoLists(list1: ListNode | null, list2: ListNode | null): ListNode | null {
+
+function ListNode(val, next) {
+  this.val = val === undefined ? 0 : val;
+  this.next = next === undefined ? null : next;
+}
+
 function mergeTwoLists(list1, list2) {
-  let one = Array.from(list1);
-  let two = Array.from(list2);
-  return one.concat(two).sort();
-  // return list1.concat(list2).sort();
+  let dummy = new ListNode(0);
+  let previous = dummy;
+
+  while (list1 && list2) {
+    if (list1.val <= list2.val) {
+      previous.next = list1;
+      previous = list1;
+      list1 = list1.next;
+    } else {
+      previous.next = list2;
+      previous = list2;
+      list2 = list2.next;
+    }
+  }
+
+  if (!list1) previous.next = list2;
+  if (!list2) previous.next = list1;
+
+  return dummy.next;
 }
 
 let first = { list1: [1, 2, 4], list2: [1, 3, 4] };
